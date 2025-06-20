@@ -1,0 +1,33 @@
+package jdbcMarch15;
+import java.sql.*;
+//import java.sql.DriverManager;
+
+
+public class Jdbs {
+
+	public static void main(String[] args) throws SQLException{
+		// TODO Auto-generated method stub
+		/*String url ="jdbc:mysql://localhost:3306/parties";
+		Connection con = DriverManager.getConnection(url,"root","Janvi@123");
+		System.out.println("connection ho gaya");
+		
+		Statement st = con.createStatement();
+		System.out.println("statement object created");
+		st.executeUpdate("create table jdbc1(id int,name varchar(20),salary int)");
+		System.out.println("table bhi create ho gyi");*/
+		
+		String url = "jdbc:mysql://localhost:3306/parties";
+		Connection con=DriverManager.getConnection(url,"root","Janvi@123");
+		System.out.println("connection ho gaya ");
+		
+		Statement st =con.createStatement();
+		st.executeUpdate("insert into jdbc1 values(103,'manish',79000) ");
+		
+		System.out.println("insertion done");
+		
+		
+		
+
+	}
+
+}

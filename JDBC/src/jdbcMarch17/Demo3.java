@@ -1,0 +1,32 @@
+package jdbcMarch17;
+
+
+import java.sql.*;
+public class Demo3 {
+
+	public static void main(String[] args)  throws SQLException{
+		// TODO Auto-generated method stub
+		String url = "jdbc:mysql://localhost:3306/parties";
+		Connection con = DriverManager.getConnection(url,"root","Janvi@123");
+		
+		System.out.println("Connection ho gaya");
+		
+		Statement st = con.createStatement();
+		
+	    System.out.println("Statement object created");
+	    
+	    ResultSet rs=st.executeQuery("select name,salary from jdbc1 where salary>78000");
+	    boolean flag=false;
+	    while(rs.next()) {
+	    	flag=true;
+	    	//System.out.print(rs.getInt(1));
+			System.out.print(" "+rs.getString(1));
+			System.out.print("  "+rs.getInt(2)+"\n");
+	    }
+	    
+	    if(false) {
+	    	System.out.println("Not matching salary");
+	    }
+	}
+
+}

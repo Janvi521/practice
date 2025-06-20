@@ -1,0 +1,84 @@
+package jdbcMarch17;
+import java.sql.*;
+import java.util.*;
+
+
+public class Q1 {
+	public static void main(String[] args)  throws SQLException {
+		Scanner sc= new Scanner(System.in);
+		String url= "jdbc:mysql://localhost:3306/march17";
+		Connection  con =DriverManager.getConnection(url,"root","Janvi@123");
+		
+		 //for create table
+		 Statement st =con.createStatement();
+		 System.out.println("Enter the table name :");
+		 String tablename =sc.nextLine();
+		 st.executeUpdate("create table "+tablename+" (id INT Primary Key Auto_increment, name VARCHAR(30), age INT, department VARCHAR(30))");
+        boolean cond=true;
+		System.out.println(" 1. for  create table \n 2. retieve all data  \n 3.for update \n 4 ");
+		while(true) {
+		int ch =sc.nextInt();
+		switch(ch) { 
+		   //for insert into table
+		case 1 :{ 
+			    String query1="insert into Students(name,age,department) values(?,?,?) ";
+		        PreparedStatement pst=con.prepareStatement(query1);
+		
+                System.out.println("How many student want to insert :");
+                int n=sc.nextInt();
+        
+                 for(int i=1;i<=n;i++) {
+                 System.out.println("Enter "+i+" Student datail : ");
+                 System.out.print(" name : ");
+                 String name=sc.nextLine();
+                 System.out.print("age  : ");
+                 int age=sc.nextInt();
+                 System.out.print("Department  : ");
+                 String depatment=sc.nextLine();
+                 pst.setString(2,name );
+                 pst.setInt(3, age);
+                 pst.setString(4, depatment);
+                 pst.executeUpdate();
+          
+                 }
+		}
+                 
+         case 2:{
+        	    //retrieve
+                ResultSet rs=st.executeQuery("select *from students");
+                while(rs.next()) {
+             	System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"   "+rs.getInt(3)+"   "+rs.getString(4)+"\n");
+             	}
+              }
+         case 3:{
+        	 	System.out.println("Enter department where you you want to repalace:  ");
+        	 	String oldDepart=sc.nextLine();
+        	 	System.out.println("Enter new department :  ");
+        	 	String newDepart=sc.nextLine();
+        	 	st.executeUpdate("update students set department ='"+newDepart+"'  where department ='"+oldDepart+"' ");
+        	 
+              }
+         case 4 :{
+        	    System.out.println("Enter the student name:");
+        	    String stName=sc.nextLine();
+        	 	st.executeUpdate("delete from students where '"+stName+"' ");
+        	 	System.out.println("all datail is deleted");
+           }
+         case 5: {
+        	    cond=false;
+         }
+         dafault :{
+        	 	System.out.println("No macthing condition");
+              }
+         
+		}
+	}
+        
+        
+       
+	}
+	
+        
+}
+
+

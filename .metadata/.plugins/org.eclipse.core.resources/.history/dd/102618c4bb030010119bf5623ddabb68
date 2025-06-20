@@ -1,0 +1,21 @@
+package jdbcMarch17;
+import java.sql.*;
+import java.util.*;
+public class Q1 {
+
+	public static void main(String[] args)  throws SQLException {
+		String url= "jdbc:mysql://localhost:3306/march17";
+		Connection  con =DriverManager.getConnection(url,"root","Janvi@123");
+		
+		Statement st =con.createStatement();
+		
+		 st.executeUpdate("create table students(id INT Primary Key Auto_increment, name VARCHAR(30), age INT, department VARCHAR(30))");
+
+		
+		//for insert into table
+		//String query="insert into Students(?,?,?,?) ";
+		//PreparedStatement st=con.preparedStatement(query);
+        
+	}
+
+}

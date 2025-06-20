@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\Users\HP\OneDrive\Desktop\Spring Tool\AllAssingmentFrom29jan\.metadata\.plugins\org.eclipse.jdt.core
+2441816936.index
+2506192191.index
+1865797976.index

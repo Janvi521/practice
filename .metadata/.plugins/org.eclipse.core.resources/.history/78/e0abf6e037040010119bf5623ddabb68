@@ -1,0 +1,106 @@
+package jdbcMarch17;
+import java.sql.*;
+import java.util.*;
+
+public class Q4 {
+	
+	private static String url="jdbc:mysql://localhost:3306/march17";
+	private static String username="root";
+	private static String password="Janvi@123";
+	Scanner sc= new Scanner(System.in);
+
+	public static void main(String[] args) throws SQLException {
+		Scanner sc = new Scanner(System.in);
+		Q4 obj = new Q4();
+		while(true) {
+		System.out.println("1. Add New  3  Employee");
+        System.out.println("2. Retrieve All Employees");
+        System.out.println("3. Update Employee Salary");
+        System.out.println("4. Delete Employee Record");
+        System.out.println("5. count total Employee");
+        System.out.println("6. exit");
+        System.out.print("Choose an option: ");
+        int ch=Integer.parseInt(sc.nextLine());
+		switch(ch) {
+		 case 1 : obj.InsertRecords();
+		          break;
+		 case 2 : obj.retrieve();
+		          break;
+		 case 3 : obj.updateEmpl();
+		          break;
+		 case 4 : obj.delete();
+                  break;
+		 case 5 : obj.countEmpl();
+		          break;
+		 case 6 : System.exit(0);
+		 dafault : System.out.println("No mactching Condition");
+		}
+		
+    
+	}
+
+	}
+	
+	public void  InsertRecords()  throws SQLException{
+		Connection con =DriverManager.getConnection(url,username,password);
+		String query="insert into employee(name,salary) values(?,?)";
+		PreparedStatement pst=con.prepareStatement(query);
+		
+		for(int i=1;i<=3;i++) {
+			System.out.println("Enter "+i+" datail:");
+			System.out.print("name : ");
+			String name =sc.nextLine();
+			
+			System.out.println("\nsalary : ");
+			int salary=Integer.parseInt(sc.nextLine());
+			
+			
+			pst.setString(1, name);
+			
+			pst.setInt(2, salary);
+			
+			pst.executeUpdate();
+		}	
+		
+	}
+	public void retrieve() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		ResultSet rs =st.executeQuery("SELECT *FROM employee");
+		while(rs.next()) {
+			 System.out.print( rs.getInt(1)+"    ");
+			 System.out.print( rs.getString(2)+"   ");
+			 
+			 System.out.print( rs.getDouble(3)+"   \n");
+			
+		}
+	}
+	
+	public void  updateEmpl() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		System.out.println("enter salary previous: ");
+		int oldSalary=Integer.parseInt(sc.nextLine());
+		System.out.println("enter salary new : ");
+		int newSalary=Integer.parseInt(sc.nextLine());
+		
+		
+	    st.executeUpdate("update employee set salary ='"+oldSalary+"' where department ='"+newSalary+"'");
+			
+	}
+	public void delete() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		System.out.println("Enter employee id to delete :");
+		int id=Integer.parseInt(sc.nextLine());
+		st.executeUpdate("DELETE  FROM employee where id="+id+"");
+	}
+	public void countEmpl() throws SQLException{
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("select count(*) as TOTAL_EMPLOYEES from employee");
+		System.out.println("toatal "+rs);
+	}
+
+
+}

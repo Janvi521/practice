@@ -1,0 +1,97 @@
+package jdbcMarch17;
+import java.util.*;
+import java.sql.*;
+public class Q3 {
+	Scanner sc =new Scanner(System.in);
+	private static String url="jdbc:mysql://localhost:3306/march17";
+	private static String username="root";
+	private static String password="Janvi@123";
+
+	public static void main(String[] args) throws SQLException {
+		Scanner sc =new Scanner(System.in);
+		Q3 obj = new Q3();
+		while(true) {
+			System.out.println("1. Add New Employee");
+			System.out.println("2. Retrieve All Employees");
+			System.out.println("3. Update Employee Salary");
+			System.out.println("4. Delete Employee Record");
+			System.out.println("5. Exit");
+			System.out.print("Choose an option: ");
+			int ch=Integer.parseInt(sc.nextLine());
+			switch(ch) {
+			 case 1 : obj.addNewEmployee();
+			          break;
+			 case 2 : obj.retrieve();
+			          break;
+			 case 3 : obj.updateEmpl();
+			          break;
+			 case 4 : obj.delete();
+			          break;
+			 case 5 : System.exit(0);
+			 dafault : System.out.println("No mactching Condition");
+			}
+			
+        
+		}
+	}
+	public void addNewEmployee() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		String query="insert into employee(name,department,salary,email) values(?,?,?,?)";
+		PreparedStatement pst=con.prepareStatement(query);
+		System.out.println("Enter no. of employee want to Add :");
+		int nemp=Integer.parseInt(sc.nextLine());
+		for(int i=1;i<=nemp;i++) {
+			System.out.println("Enter "+i+" datail:");
+			System.out.print("name : ");
+			String name =sc.nextLine();
+			System.out.print("\ndepartment : ");
+			String department =sc.nextLine();
+			System.out.println("\nsalary : ");
+			int salary=Integer.parseInt(sc.nextLine());
+			System.out.println("\nEmail : ");
+			String email =sc.nextLine();
+			
+			pst.setString(1, name);
+			pst.setString(2, department);
+			pst.setInt(3, salary);
+			pst.setString(4, email);
+			pst.executeUpdate();
+		}	
+		
+	}
+	
+	public void retrieve() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		ResultSet rs =st.executeQuery("SELECT *FROM employee");
+		while(rs.next()) {
+			 System.out.print( rs.getInt(1)+"    ");
+			 System.out.print( rs.getString(2)+"   ");
+			 System.out.print( rs.getString(3)+"   ");
+			 System.out.print( rs.getDouble(4)+"   ");
+			 System.out.print( rs.getString(5)+"\n"); 
+		}
+	}
+	public void  updateEmpl() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		System.out.println("enter department previous: ");
+		String oldDepart=sc.nextLine();
+		System.out.println("enter department new : ");
+		String newDepart=sc.nextLine();
+		
+		
+	    st.executeUpdate("update employee set Department ='"+oldDepart+"' where department ='"+newDepart+"'");
+			
+	}
+	public void delete() throws SQLException {
+		Connection con =DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		System.out.println("Enter employee id to delete :");
+		int id=Integer.parseInt(sc.nextLine());
+		st.executeUpdate("DELETE  FROM employee where id="+id+"");
+	}
+	
+	
+
+}

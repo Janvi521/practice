@@ -1,0 +1,24 @@
+package jdbcMarch17;
+import java.sql.*;
+import java.util.*;
+public class Demo4 {
+
+	public static void main(String[] args)  throws SQLException {
+		// TODO Auto-generated method stub
+		String url ="jdbc:mysql://localhost:3306/";
+		Connection con=DriverManager.getConnection(url,"root","Janvi@123");
+		Statement st = con.createStatement();
+		Scanner sc = new Scanner(System.in);
+		int id=Integer.parseInt(sc.nextLine());
+		String name =sc.nextLine();
+		int salary=Integer.parseInt(sc.nextLine());
+		
+		String query =String.format("insert into jdbc1 values(%d,'%s',%d) id,name,salary");
+		st.executeUpdate(query);
+		
+		
+		
+		
+	}
+
+}
